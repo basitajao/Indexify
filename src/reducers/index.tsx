@@ -47,12 +47,6 @@ export const userLoginReducer = (
   }
 };
 
-// const initialState = {
-//   loading: false,
-//   error: null,
-//   data: null,
-// };
-
 export interface CompanyState {
   loading: boolean;
   error?: string;

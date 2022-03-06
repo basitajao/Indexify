@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTable, usePagination } from "react-table";
 import styled from "styled-components";
 import NextPage from "../assets/next.svg";
@@ -8,7 +8,6 @@ import PreviousDisabled from "../assets/previous-disabled.svg";
 import { Modal } from "./ModalWrapper";
 import { useModal } from "../hooks/useModal";
 import DetailsModal from "./DetailsModal";
-import { TableLoader } from "./TableLoader";
 
 export interface DataProps {
   _id: number;
@@ -43,22 +42,22 @@ export const PaginatedTable = ({
   loading,
 }: Props) => {
   const [modalDetails, setDetails] = useState({});
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    page,
-    state,
-    pageCount,
-    prepareRow,
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState: { pageIndex: 0, pageSize: 10 },
-    },
-    usePagination
-  );
+  const { getTableProps, getTableBodyProps, headerGroups, page, prepareRow } =
+    useTable(
+      {
+        columns,
+        data,
+        initialState: { pageIndex: 0, pageSize: 10 },
+      },
+      usePagination
+    );
+
+  const [dat, setDat] = useState<number>();
+
+  console.log(dat, "llll");
+  useEffect(() => {
+    setDat(currentPage);
+  }, [currentPage, dat]);
 
   const { isModalVisible, openModal, closeModal } = useModal();
   return (
@@ -79,12 +78,11 @@ export const PaginatedTable = ({
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {page.map((row) => {
+          {page?.map((row) => {
             prepareRow(row);
             return (
               <tr
                 onClick={() => {
-                  // onRowClick(row.original);
                   openModal();
                   setDetails(row?.original);
                 }}
@@ -115,7 +113,7 @@ export const PaginatedTable = ({
             <img src={PreviousPage} alt="" />
           )}
         </button>
-        <span style={{ marginRight: "8px" }}>{currentPage + 1} </span>
+        <span style={{ marginRight: "8px" }}>{dat! + 1} </span>
         <span style={{ color: "#9A9A9A" }}> of {pages}</span>
         <button
           style={{
