@@ -9,6 +9,9 @@ import {
   GET_ALL_COMPANIES_REQUEST,
   GET_ALL_COMPANIES__SUCCESS,
   GET_ALL_COMPANIES_FAIL,
+  SEARCH_COMPANIES,
+  SEARCH_COMPANIES_SUCCESS,
+  SEARCH_COMPANIES_FAIL,
 } from "../constants/constants";
 
 export interface UserState {
@@ -66,6 +69,21 @@ export const getAllCompanies = (
     case GET_ALL_COMPANIES__SUCCESS:
       return { loading: false, data: action.payload };
     case GET_ALL_COMPANIES_FAIL:
+      return { loading: false, error: actions.payload };
+    default:
+      return state;
+  }
+};
+export const searchCompany = (
+  state: CompanyState = { loading: false },
+  action: Action
+) => {
+  switch (action.type) {
+    case SEARCH_COMPANIES:
+      return { loading: true };
+    case SEARCH_COMPANIES_SUCCESS:
+      return { loading: false, data: action.payload };
+    case SEARCH_COMPANIES_FAIL:
       return { loading: false, error: actions.payload };
     default:
       return state;

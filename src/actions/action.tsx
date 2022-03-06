@@ -8,6 +8,9 @@ import {
   GET_ALL_COMPANIES_REQUEST,
   GET_ALL_COMPANIES__SUCCESS,
   GET_ALL_COMPANIES_FAIL,
+  SEARCH_COMPANIES,
+  SEARCH_COMPANIES_SUCCESS,
+  SEARCH_COMPANIES_FAIL,
 } from "../constants/constants";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
@@ -75,7 +78,7 @@ export const getAllCompanies =
       dispatch({
         type: GET_ALL_COMPANIES_REQUEST,
       });
-      const { data } = await request.get(`/company?${page}`);
+      const { data } = await request.get(`/company?page=${page}`);
       dispatch({
         type: GET_ALL_COMPANIES__SUCCESS,
         payload: data?.payload,
@@ -83,6 +86,30 @@ export const getAllCompanies =
     } catch (err) {
       dispatch({
         type: GET_ALL_COMPANIES_FAIL,
+        payload: err,
+      });
+    }
+  };
+export const searchCompanies =
+  (
+    page: number,
+    name: string
+  ): ThunkAction<Promise<void>, RootState, unknown, AnyAction> =>
+  async (
+    dispatch: ThunkDispatch<RootState, unknown, AnyAction>
+  ): Promise<void> => {
+    try {
+      dispatch({
+        type: SEARCH_COMPANIES,
+      });
+      const { data } = await request.get(`/company/${name}?page=${page}`);
+      dispatch({
+        type: SEARCH_COMPANIES_SUCCESS,
+        payload: data?.payload,
+      });
+    } catch (err) {
+      dispatch({
+        type: SEARCH_COMPANIES_FAIL,
         payload: err,
       });
     }

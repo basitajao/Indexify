@@ -8,6 +8,7 @@ import PreviousDisabled from "../assets/previous-disabled.svg";
 import { Modal } from "./ModalWrapper";
 import { useModal } from "../hooks/useModal";
 import DetailsModal from "./DetailsModal";
+import { TableLoader } from "./TableLoader";
 
 export interface DataProps {
   _id: number;
@@ -26,20 +27,27 @@ interface Props {
   // data: DataProps[];
   data: any;
   loading?: boolean;
+  pages: number;
+  currentPage: number;
+  gotoPrevPage: () => void;
+  gotoNextPage: () => void;
 }
 
-export const PaginatedTable = ({ columns, data, loading }: Props) => {
+export const PaginatedTable = ({
+  columns,
+  data,
+  pages,
+  currentPage,
+  gotoPrevPage = () => {},
+  gotoNextPage = () => {},
+  loading,
+}: Props) => {
   const [modalDetails, setDetails] = useState({});
   const {
-    onRowClick = () => {},
-    // gotoPrevPage = () => {},
-    // gotoNextPage = () => {},
     getTableProps,
     getTableBodyProps,
     headerGroups,
     page,
-    nextPage,
-    previousPage,
     state,
     pageCount,
     prepareRow,
@@ -52,9 +60,7 @@ export const PaginatedTable = ({ columns, data, loading }: Props) => {
     usePagination
   );
 
-  // console.log(data);
   const { isModalVisible, openModal, closeModal } = useModal();
-  const { pageIndex } = state;
   return (
     <div>
       {isModalVisible && (
@@ -78,7 +84,7 @@ export const PaginatedTable = ({ columns, data, loading }: Props) => {
             return (
               <tr
                 onClick={() => {
-                  onRowClick(row.original);
+                  // onRowClick(row.original);
                   openModal();
                   setDetails(row?.original);
                 }}
@@ -95,17 +101,30 @@ export const PaginatedTable = ({ columns, data, loading }: Props) => {
         </tbody>
       </Table>
       <Pagination>
-        <button onClick={() => previousPage()} style={{ marginRight: "10px" }}>
-          {pageIndex + 1 === pageCount ? (
-            <img src={PreviousPage} alt="" />
-          ) : (
+        <button
+          onClick={() => gotoPrevPage()}
+          disabled={currentPage === 0 ? true : false}
+          style={{
+            marginRight: "10px",
+            cursor: `${currentPage === 0 ? "not-allowed" : ""}`,
+          }}
+        >
+          {currentPage === 0 ? (
             <img src={PreviousDisabled} alt="" />
+          ) : (
+            <img src={PreviousPage} alt="" />
           )}
         </button>
-        <span style={{ marginRight: "8px" }}>{pageIndex + 1} </span>
-        <span style={{ color: "#9A9A9A" }}> of {pageCount}</span>
-        <button style={{ marginLeft: "10px" }} onClick={() => nextPage()}>
-          {pageIndex + 1 === pageCount ? (
+        <span style={{ marginRight: "8px" }}>{currentPage + 1} </span>
+        <span style={{ color: "#9A9A9A" }}> of {pages}</span>
+        <button
+          style={{
+            marginLeft: "10px",
+            cursor: `${currentPage + 1 === pages ? "not-allowed" : ""}`,
+          }}
+          onClick={() => gotoNextPage()}
+        >
+          {currentPage + 1 === pages ? (
             <img src={NextDisabled} alt="" />
           ) : (
             <img src={NextPage} alt="" />
