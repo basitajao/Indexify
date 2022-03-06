@@ -70,7 +70,7 @@ const Homepage = () => {
       clearTimeout(timer);
       timer = setTimeout(() => {
         func.apply(this, args);
-      }, 800);
+      }, 600);
     };
   };
 

@@ -23,8 +23,7 @@ export interface DataProps {
 
 interface Props {
   columns: any;
-  // data: DataProps[];
-  data: any;
+  data: DataProps[];
   loading?: boolean;
   pages: number;
   currentPage: number;

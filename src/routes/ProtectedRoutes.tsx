@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 import { getUser } from "../utils/helper";
 
 interface Props {
-  children: any;
+  children: JSX.Element;
 }
 
 export const ProtectedRoute: React.FC<Props> = ({ children }) => {

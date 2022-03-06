@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { SyntheticEvent, useState } from "react";
 import { Container, FormContainer, Input, Button, Form } from "./styled";
 import { ReactComponent as Logo } from "../../assets/logo.svg";
 import { login } from "../../actions/action";
@@ -18,7 +18,7 @@ const Login = () => {
 
   const navigateTo = () => navigate("/");
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(login(email, navigateTo));
   };

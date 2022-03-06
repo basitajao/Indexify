@@ -21,7 +21,7 @@ import { setAuthToken, setIsAuthenticated } from "../utils/helper";
 export const login =
   (
     email: string,
-    navigateTo: any
+    navigateTo: () => void
   ): ThunkAction<Promise<void>, RootState, unknown, AnyAction> =>
   async (
     dispatch: ThunkDispatch<RootState, unknown, AnyAction>
@@ -48,7 +48,7 @@ export const login =
 
 export const logout =
   (
-    navigateToLogin: any
+    navigateToLogin: () => void
   ): ThunkAction<Promise<void>, RootState, unknown, AnyAction> =>
   async (
     dispatch: ThunkDispatch<RootState, unknown, AnyAction>

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
-const DetailsModal = ({ data }: any) => {
-  console.log(data);
+const DetailsModal = (data: any) => {
   return (
     <div>
       <H3>My company</H3>
