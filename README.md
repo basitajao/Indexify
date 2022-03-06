@@ -1,4 +1,4 @@
-## Live link to [indexify](https://indexify-grey.netlify.app/) task --- Work in progress
+## Live link to [indexify](https://indexify-grey.netlify.app/) task --- Work in progress🥳🥳🥳🥳🥳
 
 ## Technologies used
 
@@ -10,3 +10,7 @@
 -Node
 -React-table
 -React router
+
+### Note:
+
+You can login with the default email already in the input box()
